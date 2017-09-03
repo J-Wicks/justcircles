@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Button, Dimensions } from 'react-native';
-import Svg, {Circle} from 'react-native-svg';
+import Svg, { Circle } from 'react-native-svg';
 
 const height = Dimensions.get('window').width;
 const width = Dimensions.get('window').height;
@@ -13,56 +13,62 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
+    height: 50,
+    width,
     borderWidth: 1,
-    borderRadius: 10,
     borderColor: '#841584',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  font: {
+    color: 'white',
+    fontSize: 30,
   },
 });
 
 function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i += 1) {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
 }
 
-const eventHandler = (event) => {
-  return (
+const eventHandler = () => (
   <SvgExample strokeColor={getRandomColor()} fillColor={getRandomColor()} />
-  )
-};
+);
 
-const SvgExample = function theCircle(props) {
-  return (
-    <Svg height={height} width={width - 50}>
-      <Circle
-        cx={width/2}
-        cy={height / 2}
-        r={props.radius}
-        fill={props.fillColor}
-      />
-    </Svg>
-  );
-};
+const SvgExample = props => (
+  <Svg height={height - 5} width={width}>
+    <Circle
+      cx={width / 2}
+      cy={height / 2}
+      r={props.radius}
+      fill={props.fillColor}
+    />
+  </Svg>
+);
+
 
 class Main extends React.Component {
-  constructor(){
-    super()
-    this.state ={
+  constructor() {
+    super();
+    this.state = {
       strokeColor: getRandomColor(),
       fillColor: getRandomColor(),
       circleRadius: Math.random() * 125,
+
     };
     this.clickHandler = this.clickHandler.bind(this);
   }
 
   clickHandler() {
+    const radius = Math.random() * 125;
     this.setState({
       strokeColor: getRandomColor(),
       fillColor: getRandomColor(),
-      circleRadius: Math.random() * 125,
+      circleRadius: radius,
     });
   }
 
@@ -74,14 +80,13 @@ class Main extends React.Component {
           strokeColor={this.state.strokeColor}
           fillColor={this.state.fillColor}
         />
-        <View style={styles.button}>
-          <Button
-            onPress={this.clickHandler}
-            color='#841584'
-            title="Look at another Circle"
-            accessibilityLabel="Look at another circle"
-          />
-        </View>
+        <Button
+          color="#841584"
+          title="Look At Another Circle"
+          onPress={this.clickHandler}
+          accessibilityTitle="Look at another circle"
+          circleProps={this.state}
+        />
       </View>
     );
   }
