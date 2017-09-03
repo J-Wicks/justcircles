@@ -1,6 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, View, Button, Dimensions } from 'react-native';
 import Svg, {Circle} from 'react-native-svg';
+
+const height = Dimensions.get('window').width;
+const width = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -8,6 +11,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  button: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#841584',
   },
 });
 
@@ -27,12 +35,11 @@ const eventHandler = (event) => {
 };
 
 const SvgExample = function theCircle(props) {
-  console.log(props)
   return (
-    <Svg height="250" width="250">
+    <Svg height={height} width={width - 50}>
       <Circle
-        cx="125"
-        cy="125"
+        cx={width/2}
+        cy={height / 2}
         r={props.radius}
         fill={props.fillColor}
       />
@@ -63,17 +70,18 @@ class Main extends React.Component {
     return (
       <View style={styles.container}>
         <SvgExample
-          onClick={this.clickHandler}
           radius={this.state.circleRadius}
           strokeColor={this.state.strokeColor}
           fillColor={this.state.fillColor}
         />
-        <Button
-          onPress={this.clickHandler}
-          title="Look at another Circle"
-          color="#841584"
-          accessibilityLabel="Look at another circle"
-        />
+        <View style={styles.button}>
+          <Button
+            onPress={this.clickHandler}
+            color='#841584'
+            title="Look at another Circle"
+            accessibilityLabel="Look at another circle"
+          />
+        </View>
       </View>
     );
   }
